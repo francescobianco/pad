@@ -8,6 +8,6 @@ if [ -z "$1" ]; then
 else
   touch "$PAD"
   ( sleep 1; chmod 660 "$PAD"; chown "$USER:$USER" "$PAD" ) &
-  echo "Listening PAD from $PAD"
+  clear && echo "Listening PAD from $PAD"
   nc -lkU "$PAD"
 fi
