@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+PAD=/dev/pad${1:-1}
+USER=$(logname)
+
+if [ -z "$1" ]; then
+  nc -q0 -U "$PAD"
+else
+  touch "$PAD"
+  ( sleep 1; chmod 660 "$PAD"; chown "$USER:$USER" "$PAD" ) &
+  echo "Listening PAD from $PAD"
+  nc -lkU "$PAD"
+fi
