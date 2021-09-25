@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PAD=/dev/pad${1:-1}
 USER=$(logname)
+PAD=/dev/pad${1:-1}
 
 if [ -z "$1" ]; then
   nc -q0 -U "$PAD"
