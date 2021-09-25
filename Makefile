@@ -1,9 +1,10 @@
 
-BIN := pad
-PREFIX := /usr/local
+BIN ?= pad
+PREFIX ?= /usr/local
 
 install:
-	cp pad $(PREFIX)/bin/$(BIN)
+	@cp pad $(PREFIX)/bin/$(BIN)
+	@echo Installation complete.
 
 uninstall:
-	rm -f $(PREFIX)/bin/$(BIN)
+	@rm -f $(PREFIX)/bin/$(BIN)
