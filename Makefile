@@ -5,7 +5,7 @@ PAD_SOCKET=/home/pad/.socket
 
 install:
 	@useradd -m -d /home/pad -s /bin/bash pad 2> /dev/null || true
-	@usermod -G pad $(shell logname)
+	@usermod -a -G pad $(shell logname)
 	@touch ${PAD_SOCKET}
 	@chown pad:pad ${PAD_SOCKET}
 	@chmod 777 ${PAD_SOCKET}
@@ -15,7 +15,7 @@ install:
 	@passwd -q pad
 	@cp pad $(PREFIX)/bin/$(BIN)
 	@chmod +x $(PREFIX)/bin/$(BIN)
-	@echo Installation complete. Follow this step:
+	@echo Installation complete. Follow this steps:
 	@echo 1. Restart your PC.
 	@echo 2. Connect via SSH the pad user.
 
