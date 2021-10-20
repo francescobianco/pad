@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-USER=$(logname)
-PAD=/dev/pad${1:-1}
+PAD_SOCKET=/home/pad/.socket
 
 if [ -z "$1" ]; then
-  nc -q0 -U "$PAD"
+  nc -q0 -U "$PAD_SOCKET"
+elif [ "$1" = "start" ]; then
+  clear
+  nc -lkU "$PAD_SOCKET"
 else
-  touch "$PAD"
-  ( sleep 1; chmod 660 "$PAD"; chown "$USER:$USER" "$PAD" ) &
-  clear && echo "Listening PAD from $PAD"
-  nc -lkU "$PAD"
+  echo "Usage: ls | pad"
 fi
