@@ -7,6 +7,9 @@ if [ -z "$1" ]; then
 elif [ "$1" = "start" ]; then
   clear
   nc -lkU "$PAD_SOCKET"
+elif [ "$1" = "config" ]; then
+  echo "Set SSH password for the pad user"
+  passwd -q pad
 elif [ "$1" = "shell" ]; then
   cat - | nc -q0 -U "$PAD_SOCKET"
 else
