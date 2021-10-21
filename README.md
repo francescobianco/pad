@@ -3,7 +3,7 @@
 ## Installation
 
 ```shell
-curl binst.tk | sudo bash -s francescobianco/pad
+curl -s binst.tk | sudo bash -s francescobianco/pad
 ```
 
 ## Activate PAD display
