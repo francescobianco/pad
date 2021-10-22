@@ -5,26 +5,27 @@ export COLUMNS=80
 export LINES=29
 
 PAD_SOCKET=/home/pad/.socket
+PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
 
 error() { echo $1; exit 1; }
 
 if [ -z "$1" ]; then
-  nc -q0 -U "$PAD_SOCKET"
+  ${PAD_OUTPUT}
 elif [ "$1" = "start" ]; then
   clear
   nc -lkU "$PAD_SOCKET"
 elif [ "$1" = "clear" ]; then
-  clear | nc -q0 -U "$PAD_SOCKET"
+  clear | ${PAD_OUTPUT}
 elif [ "$1" = "config" ]; then
   [[ $EUID -ne 0 ]] && error "sudo required"
   echo "Set SSH password for the pad user"
   passwd -q pad
 elif [ "$1" = "note" ]; then
   echo "Your pad is ready to edit..."
-  nano | nc -q0 -U "$PAD_SOCKET"
+  nano | ${PAD_OUTPUT}
 elif [ "$1" = "shell" ]; then
-  cat - | nc -q0 -U "$PAD_SOCKET"
+  cat - | ${PAD_OUTPUT}
 else
   echo "Please! Watch on pad..."
-  exec "$@" | nc -q0 -U "$PAD_SOCKET"
+  exec "$@" | ${PAD_OUTPUT}
 fi
