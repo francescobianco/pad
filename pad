@@ -22,10 +22,10 @@ elif [ "$1" = "config" ]; then
   passwd -q pad
 elif [ "$1" = "note" ]; then
   echo "Your pad is ready to edit..."
-  nano | ${PAD_OUTPUT}
+  nano ${HOME}/.notes | ${PAD_OUTPUT}
 elif [ "$1" = "shell" ]; then
   cat - | ${PAD_OUTPUT}
 else
-  echo "Please! Watch on pad..."
+  echo "Please! Watch on pad... "
   exec "$@" | ${PAD_OUTPUT}
 fi
