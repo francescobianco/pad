@@ -14,7 +14,7 @@ install:
 	@chown pad:pad ${PAD_SOCKET}
 	@chmod 777 ${PAD_SOCKET}
 	@echo pad start > $(PAD_HOME)/.bashrc
-	@touch $(HOME)/.padrc
+	@touch $(HOME)/.padrc $(PAD_HOME)/.padrc
 	@apt-get install -y --no-install-recommends openssh-server > /dev/null
 	@rm -f $(HOME)/.ssh/pad
 	@ssh-keygen -t rsa -q -N "" -f $(HOME)/.ssh/pad -C "$(USER)@$(HOST)"

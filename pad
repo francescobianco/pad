@@ -6,7 +6,7 @@ PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
 TMP_HOME="$(getent passwd $(logname) | cut -d: -f6)"
 SSH_LOGIN="ssh -i ${TMP_HOME}/.ssh/pad -oStrictHostKeyChecking=no -t $(logname)@$(hostname)"
 
-source $HOME/.padrc
+#source $HOME/.padrc
 
 error() { echo $1; exit 1; }
 
@@ -29,9 +29,11 @@ elif [ "$1" = "bash" ]; then
 elif [ "$1" = "shell" ]; then
   $SSH_LOGIN /bin/bash -i | ${PAD_OUTPUT}
 elif [ "$1" = "info" ]; then
+  echo "USER: $USER"
+  ls -l $PAD_SOCKET
   $SSH_LOGIN pad ssh-info | ${PAD_OUTPUT}
 elif [ "$1" = "ssh-info" ]; then
-  $SSH_LOGIN pad ssh-info | ${PAD_OUTPUT}
+  printenv
 else
   echo "Please! Watch on pad... "
   exec "$@" | ${PAD_OUTPUT}
