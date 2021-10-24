@@ -19,13 +19,15 @@ elif [ "$1" = "start" ]; then
   pad banner
   nc -lkU "${PAD_SOCKET}"
 elif [ "$1" = "banner" ]; then
-  clear
+  pad erase-screen
   figlet "< pad >"
   echo ""
   echo "Created by Francesco Bianco <bianco@javanile.org>"
   echo "Thanks to Lara & Tancredi"
   echo ""
   echo "* * *"
+elif [ "$1" = "erase-screen" ]; then
+  for x in {1..4}; do for y in {1..256}; do echo " "; done && sleep 1; done && clear
 elif [ "$1" = "clear" ]; then
   clear | ${PAD_OUTPUT}
 elif [ "$1" = "config" ]; then
