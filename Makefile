@@ -28,6 +28,9 @@ install-pad-socket:
 	@chmod 777 $(PAD_SOCK)
 
 install-pad-files:
+	@touch $(PAD_CONF)
+	@grep -q -e 'pad_width=' $(PAD_CONF) || echo 'pad_width=80' >> $(PAD_CONF)
+	@grep -q -e 'pad_height=' $(PAD_CONF) || echo 'pad_height=25' >> $(PAD_CONF)
 	@cp -f pad $(PREFIX)/bin/$(BIN)
 	@cp -f .padrc $(PAD_LIB)/.padrc
 	@chmod +x $(PREFIX)/bin/$(BIN)
