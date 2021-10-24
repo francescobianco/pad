@@ -3,3 +3,5 @@ LINES=29
 
 stty rows 29
 stty cols 80
+
+#printf '%b' '\e]12;yellow\a'
