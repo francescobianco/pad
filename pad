@@ -31,7 +31,7 @@ elif [ "$1" = "erase-screen" ]; then
 elif [ "$1" = "clear" ]; then
   clear | ${PAD_OUTPUT}
 elif [ "$1" = "config" ]; then
-  [[ $EUID -ne 0 ]] && error "sudo required"
+  [ $EUID -ne 0 ] && error "sudo required"
   echo "Set SSH password for the pad user"
   passwd -q pad
 elif [ "$1" = "note" ]; then
