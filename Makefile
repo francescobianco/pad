@@ -4,6 +4,7 @@ BIN ?= pad
 PREFIX ?= /usr/local
 
 PAD_LIB := /usr/lib/pad
+PAD_CONF := /etc/pad.conf
 PAD_SOCKET := /usr/lib/pad/pad.sock
 
 USER := $(shell logname)
