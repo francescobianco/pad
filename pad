@@ -3,8 +3,8 @@ set -e
 
 eval "$(cat /etc/pad.conf | grep 'pad_')"
 
-COLUMNS=$pad_width
 LINES=$pad_height
+COLUMNS=$pad_width
 
 PAD_LIB=/var/lib/pad
 PAD_SOCK=/usr/lib/pad/pad.sock
