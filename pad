@@ -2,9 +2,9 @@
 set -e
 
 PAD_LIB=/var/lib/pad
-PAD_SOCKET=/usr/lib/pad/pad.sock
+PAD_SOCK=/usr/lib/pad/pad.sock
 
-PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
+PAD_OUTPUT="nc -q0 -U ${PAD_SOCK}"
 
 USER_HOME="$(getent passwd $(logname) | cut -d: -f6)"
 SSH_LOGIN="ssh -i ${USER_HOME}/.ssh/pad -oStrictHostKeyChecking=no -t $(logname)@$(hostname)"
@@ -17,7 +17,7 @@ if [ -z "$1" ]; then
   ${PAD_OUTPUT}
 elif [ "$1" = "start" ]; then
   pad banner
-  nc -lkU "${PAD_SOCKET}"
+  nc -lkU "${PAD_SOCK}"
 elif [ "$1" = "banner" ]; then
   pad erase-screen
   figlet "< pad >"

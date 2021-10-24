@@ -5,7 +5,7 @@ PREFIX ?= /usr/local
 
 PAD_LIB := /usr/lib/pad
 PAD_CONF := /etc/pad.conf
-PAD_SOCKET := /usr/lib/pad/pad.sock
+PAD_SOCK := /usr/lib/pad/pad.sock
 
 USER := $(shell logname)
 HOME := $(shell getent passwd $(shell logname) | cut -d: -f6)
@@ -23,9 +23,9 @@ install-pad-user:
 	@echo pad start > $(PAD_LIB)/.bashrc
 
 install-pad-socket:
-	@touch $(PAD_SOCKET)
-	@chown pad:pad $(PAD_SOCKET)
-	@chmod 777 $(PAD_SOCKET)
+	@touch $(PAD_SOCK)
+	@chown pad:pad $(PAD_SOCK)
+	@chmod 777 $(PAD_SOCK)
 
 install-pad-files:
 	@cp -f pad $(PREFIX)/bin/$(BIN)
