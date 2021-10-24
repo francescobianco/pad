@@ -17,3 +17,7 @@ sudo pad config
 ```shell
 echo "Hello, World!" | pad
 ```
+
+1. 
+2. 
+3. 

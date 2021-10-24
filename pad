@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-export COLUMNS=80
-export LINES=29
-
 PAD_SOCKET=/home/pad/.socket
 PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
+TMP_HOME="$(getent passwd $(logname) | cut -d: -f6)"
+SSH_LOGIN="ssh -i ${TMP_HOME}/.ssh/pad -oStrictHostKeyChecking=no -t $(logname)@$(hostname)"
+
+source $HOME/.padrc
 
 error() { echo $1; exit 1; }
 
@@ -23,8 +24,14 @@ elif [ "$1" = "config" ]; then
 elif [ "$1" = "note" ]; then
   echo "Your pad is ready to edit..."
   nano ${HOME}/.notes | ${PAD_OUTPUT}
+elif [ "$1" = "bash" ]; then
+  bash
 elif [ "$1" = "shell" ]; then
-  cat - | ${PAD_OUTPUT}
+  $SSH_LOGIN /bin/bash -i | ${PAD_OUTPUT}
+elif [ "$1" = "info" ]; then
+  $SSH_LOGIN pad ssh-info | ${PAD_OUTPUT}
+elif [ "$1" = "ssh-info" ]; then
+  $SSH_LOGIN pad ssh-info | ${PAD_OUTPUT}
 else
   echo "Please! Watch on pad... "
   exec "$@" | ${PAD_OUTPUT}
