@@ -1,20 +1,31 @@
 #!/usr/bin/env bash
 set -e
 
-PAD_SOCKET=/home/pad/.socket
-PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
-TMP_HOME="$(getent passwd $(logname) | cut -d: -f6)"
-SSH_LOGIN="ssh -i ${TMP_HOME}/.ssh/pad -oStrictHostKeyChecking=no -t $(logname)@$(hostname)"
+PAD_LIB=/var/lib/pad
+PAD_SOCKET=/usr/lib/pad/pad.sock
 
-#source $HOME/.padrc
+PAD_OUTPUT="nc -q0 -U $PAD_SOCKET"
+
+USER_HOME="$(getent passwd $(logname) | cut -d: -f6)"
+SSH_LOGIN="ssh -i ${USER_HOME}/.ssh/pad -oStrictHostKeyChecking=no -t $(logname)@$(hostname)"
+
+source ${USER_HOME}/.padrc
 
 error() { echo $1; exit 1; }
 
 if [ -z "$1" ]; then
   ${PAD_OUTPUT}
 elif [ "$1" = "start" ]; then
+  pad banner
+  nc -lkU "${PAD_SOCKET}"
+elif [ "$1" = "banner" ]; then
   clear
-  nc -lkU "$PAD_SOCKET"
+  figlet "< pad >"
+  echo ""
+  echo "Created by Francesco Bianco <bianco@javanile.org>"
+  echo "Thanks to Lara & Tancredi"
+  echo ""
+  echo "* * *"
 elif [ "$1" = "clear" ]; then
   clear | ${PAD_OUTPUT}
 elif [ "$1" = "config" ]; then
@@ -23,17 +34,9 @@ elif [ "$1" = "config" ]; then
   passwd -q pad
 elif [ "$1" = "note" ]; then
   echo "Your pad is ready to edit..."
-  nano ${HOME}/.notes | ${PAD_OUTPUT}
-elif [ "$1" = "bash" ]; then
-  bash
+  nano ${USER_HOME}/.notes | ${PAD_OUTPUT}
 elif [ "$1" = "shell" ]; then
-  $SSH_LOGIN /bin/bash -i | ${PAD_OUTPUT}
-elif [ "$1" = "info" ]; then
-  echo "USER: $USER"
-  ls -l $PAD_SOCKET
-  $SSH_LOGIN pad ssh-info | ${PAD_OUTPUT}
-elif [ "$1" = "ssh-info" ]; then
-  printenv
+  $SSH_LOGIN bash --rcfile ${PAD_LIB}/.padrc -i | ${PAD_OUTPUT}
 else
   echo "Please! Watch on pad... "
   exec "$@" | ${PAD_OUTPUT}
